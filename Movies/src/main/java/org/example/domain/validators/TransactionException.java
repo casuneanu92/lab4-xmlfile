@@ -1,8 +1,6 @@
 package org.example.domain.validators;
 
-/**
- * Created by radu.
- */
+
 public class TransactionException extends RuntimeException{
 
     public TransactionException(String message) {

@@ -17,6 +17,10 @@ public class Clients extends BaseEntity<Long>{
         this.age = age;
     }
 
+
+    public Clients() {
+
+    }
     public Clients (Long id, String cnp, String firstName, String lastName, int age) {
         super(id);
         this.cnp = cnp;

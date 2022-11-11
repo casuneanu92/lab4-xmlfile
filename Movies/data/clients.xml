@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<clients>
+    <clients clientsID="1">
+        <CNP>2970914243654</CNP>
+        <firstName>Ionescu</firstName>
+        <lastName>Andrei</lastName>
+        <age>25</age>
+    </clients>
+    <clients clientsID="2">
+        <CNP>1970113243654</CNP>
+        <firstName>Tofei</firstName>
+        <lastName>Iulie</lastName>
+        <age>50</age>
+    </clients>
+    <clients clientsID="3">
+        <CNP>18904122232434</CNP>
+        <firstName>Popescu</firstName>
+        <lastName>Maria</lastName>
+        <age>26</age>
+    </clients>
+</clients>

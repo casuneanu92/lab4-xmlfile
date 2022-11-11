@@ -1,8 +1,5 @@
 package org.example.domain.validators;
 
-/**
- * @author radu.
- */
 
 public class ValidatorException extends TransactionException {
     public ValidatorException(String message) {
