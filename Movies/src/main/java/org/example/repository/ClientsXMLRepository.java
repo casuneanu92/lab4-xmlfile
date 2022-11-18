@@ -19,11 +19,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class ClientsXMLRepository extends InMemoryRepository<Long, Clients> {
@@ -31,12 +27,10 @@ public class ClientsXMLRepository extends InMemoryRepository<Long, Clients> {
     private String filename;
     private static final String Clients_Tag = "clients";
     private static final String Clients_Id_Tag = "clientsId";
-
-    private static final String Clients_CNP = "clientsCNP";
-
-    private static final String Clients_FirstName_Tag = "firstName";
     private static final String Clients_LastName_Tag = "lastName";
+    private static final String Clients_FirstName_Tag = "firstName";
     private static final String Clients_Age_Tag = "age";
+
 
     public ClientsXMLRepository(Validator<Clients> validator, String filename) {
         super(validator);
@@ -53,22 +47,20 @@ public class ClientsXMLRepository extends InMemoryRepository<Long, Clients> {
             Document document = documentBuilder.parse(filename);
 
             Element rootElement = document.getDocumentElement();
-            NodeList clientsNodes = rootElement.getChildNodes();
+            //NodeList doctorNodes = rootElement.getChildNodes();
 
-            for (int i = 0; i < clientsNodes.getLength(); i++) {
-                Node patientNode = clientsNodes.item(i);
-                if (!(clientsNodes instanceof Element)) {
-                    continue;
-                }
+            NodeList nodes = rootElement.getChildNodes();
+            for (int i = 0; i < nodes.getLength(); i++) {
+                if(nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) nodes.item(i);
+                    Element clientsElement = (Element) element;
+                    Clients clients = buildClientsFromClientsElement(clientsElement);
 
-                Element clientsElement = (Element) clientsNodes;
-
-                Clients clients = buildClientsFromClientsElement(clientsElement);
-
-                try {
-                    super.save(clients);
-                } catch (ValidatorException e) {//is thrown only when I could not add because a car with the same id already is in repoi
-                    e.printStackTrace();
+                    try {
+                        super.save(clients);
+                    } catch (ValidatorException e) {//is thrown only when I could not add because a car with the same id already is in repoi
+                        e.printStackTrace();
+                    }
                 }
             }
         }catch (ValidatorException | ParserConfigurationException | SAXException | IOException  ex){
@@ -76,25 +68,22 @@ public class ClientsXMLRepository extends InMemoryRepository<Long, Clients> {
         }
     }
 
-    private static Clients buildClientsFromClientsElement(Element clientsElement) {
-        Node idNode = clientsElement.getElementsByTagName(Clients_Tag).item(0);
+    private static Clients buildClientsFromClientsElement(Element doctorElement) {
+
+        Node idNode = doctorElement.getElementsByTagName(Clients_Id_Tag).item(0);
         String id = idNode.getTextContent();
 
-        Node cnpNode = clientsElement.getElementsByTagName(Clients_CNP).item(0);
-        String CNP = cnpNode.getTextContent();
-
-        Node lastNameNode = clientsElement.getElementsByTagName(Clients_LastName_Tag).item(0);
+        Node lastNameNode = doctorElement.getElementsByTagName(Clients_LastName_Tag).item(0);
         String lastName = lastNameNode.getTextContent();
 
-        Node firstNameNode = clientsElement.getElementsByTagName(Clients_FirstName_Tag).item(0);
-        String firstName = firstNameNode.getTextContent();
+        Node firstNameNode = doctorElement.getElementsByTagName(Clients_FirstName_Tag).item(0);
+        String fistName = firstNameNode.getTextContent();
 
-        Node ageNode = clientsElement.getElementsByTagName(Clients_Age_Tag).item(0);
+        Node ageNode = doctorElement.getElementsByTagName(Clients_Age_Tag).item(0);
         String age = ageNode.getTextContent();
 
-       Clients clients = new Clients(Long.parseLong(id), CNP, lastName, firstName, Integer.parseInt(age));
+        Clients clients = new Clients(Long.parseLong(id), lastName, fistName, Integer.parseInt(age));
         return clients;
-
 
     }
 
@@ -120,7 +109,7 @@ public class ClientsXMLRepository extends InMemoryRepository<Long, Clients> {
         Document document = documentBuilder.parse(filename);
 
         // Adding a general Car Node(Tag) to the Document
-        addMoviesToDOM(entity, document);
+        addClientsToDOM(entity, document);
 
         // Save Document to XML
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -133,49 +122,44 @@ public class ClientsXMLRepository extends InMemoryRepository<Long, Clients> {
 
     }
 
-    private static void addMoviesToDOM(Clients clients, Document document) {
+    private static void addClientsToDOM(Clients clients, Document document) {
         Element rootElement = document.getDocumentElement();
-        Node moviesNode = createNodeFromMovies(clients, document);
-        rootElement.appendChild(moviesNode);
+        Node clientsNode = createNodeFromClients(clients, document);
+        rootElement.appendChild(clientsNode);
     }
 
-    private static Node createNodeFromMovies(Clients clientsToSave, Document document) {
+    private static Node createNodeFromClients(Clients clientsToSave, Document document) {
         // Create Doctor node with its respective children
-        Element patientElement = document.createElement(Clients_Tag);
+        Element clientsElement = document.createElement(Clients_Tag);
 
         // append id Element(Tag)
         Element idElement = document.createElement(Clients_Id_Tag);
-        idElement.setTextContent(clientsToSave.getId().toString());
-        patientElement.appendChild(idElement);
-
-        //append lastName Element (Tag)
-        Element cnpElement = document.createElement(Clients_LastName_Tag);
-        cnpElement.setTextContent(clientsToSave.getCnp());
-        patientElement.appendChild(cnpElement);
+        idElement.setTextContent(clientsToSave.getIdEntity().toString());
+        clientsElement.appendChild(idElement);
 
         //append lastName Element (Tag)
         Element lastNameElement = document.createElement(Clients_LastName_Tag);
-        lastNameElement.setTextContent(clientsToSave.getFirstName());
-        patientElement.appendChild(lastNameElement);
+        lastNameElement.setTextContent(clientsToSave.getLastName());
+        clientsElement.appendChild(lastNameElement);
 
         // append firstName Element(Tag)
         Element firstNameElement = document.createElement(Clients_FirstName_Tag);
         firstNameElement.setTextContent(clientsToSave.getFirstName());
-        patientElement.appendChild(firstNameElement);
+        clientsElement.appendChild(firstNameElement);
 
         // append age Element(Tag)
         Element ageElement = document.createElement(Clients_Age_Tag);
         ageElement.setTextContent(String.valueOf(clientsToSave.getAge()));
-        patientElement.appendChild(ageElement);
+        clientsElement.appendChild(ageElement);
 
-        return patientElement;
+        return clientsElement;
     }
 
     @Override
-    public Optional<Clients> update (Clients clients) throws ValidatorException {
+    public Optional<Clients> update (Clients clients) throws ValidatorException, IllegalAccessException {
         Optional<Clients> optionalClients = super.update(clients);
         try {
-            deleteNode(clients.getId().toString());
+            deleteNode(clients.getIdEntity().toString());
         } catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
         }
@@ -193,10 +177,10 @@ public class ClientsXMLRepository extends InMemoryRepository<Long, Clients> {
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         Document doc = docBuilder.parse(filename);
 
-        NodeList products = doc.getElementsByTagName("patient");
+        NodeList products = doc.getElementsByTagName("clients");
         for (int i = 0; i < products.getLength(); i++) {
             Element product = (Element) products.item(i);
-            Element idTag = (Element) product.getElementsByTagName("patientId").item(0);
+            Element idTag = (Element) product.getElementsByTagName("clientsId").item(0);
             if (idTag.getTextContent().equalsIgnoreCase(id)) {
                 idTag.getParentNode().getParentNode().removeChild(products.item(i));
                 break;
@@ -220,7 +204,7 @@ public class ClientsXMLRepository extends InMemoryRepository<Long, Clients> {
 
 
     @Override
-    public Optional<Clients> delete(Long id) {
+    public Optional<Clients> delete(Long id) throws IllegalAccessException {
         Optional<Clients> clients = super.delete(id);
         try {
             deleteNode(id.toString());
@@ -230,4 +214,3 @@ public class ClientsXMLRepository extends InMemoryRepository<Long, Clients> {
         return clients;
     }
 }
-

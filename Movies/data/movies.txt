@@ -1,0 +1,7 @@
+2, Titanic, 1927, 90
+3, Harry Potter, 1430, 120
+4, Cinderella, 2010, 150
+5, Ion, 1993, 60
+6, Enigma Otiliei, 1935, 120
+7, Home Alone, 1965, 45
+8,Rapirea,2021,120

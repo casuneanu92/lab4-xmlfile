@@ -6,44 +6,69 @@ import org.example.service.ClientsService;
 import org.example.service.MoviesService;
 
 import java.util.Scanner;
-import java.util.Set;
 
 public class Console {
     private ClientsService clientsService;
     private MoviesService moviesService;
+
+
+    private Scanner scanner = new Scanner(System.in);
+
+
     public Console(ClientsService clientsService, MoviesService moviesService) {
         this.clientsService = clientsService;
         this.moviesService = moviesService;
+
     }
 
-    private Scanner scanner = new Scanner(System.in);
+
     private void showMenu() {
         System.out.println("1. Adaugare clienti");
         System.out.println("2. Afisare clienti");
-        System.out.println("3. Delete clienti");
-        System.out.println("4. Adaugare movies");
-        System.out.println("5. Afisare movies");
-        System.out.println("6. Update movies");
+        System.out.println("3. Adaugare filme");
+        System.out.println("4. Afisare filme");
+        System.out.println("5. Update clienti");
+        System.out.println("6. Delete clienti");
+        System.out.println("7. Update filme");
+        System.out.println("8. Delete filme");
+       /* System.out.println("9. Adaugare consultatie");
+        System.out.println("10. Afisare consultatii");
+        System.out.println("11. Update consultatie");
+        System.out.println("12. Delete consultatie");*/
         System.out.println("x. Iesire");
     }
     public void startConsole() {
         while (true) {
             this.showMenu();
+
             System.out.println("Alegeti o optiune:");
             String option = scanner.next();
+
             if (option.equals("1")) {
                 this.addClients();
             } else if (option.equals("2")){
                 this.handleShowAllClients();
             } else if (option.equals("3")) {
-                this.deleteClients();
-            } else if (option.equals("4")) {
                 this.addMovies();
-            } else if (option.equals("5")){
+            } else if (option.equals("4")) {
                 this.handleShowAllMovies();
+            } else if (option.equals("5")) {
+                this.updateClients();
             } else if (option.equals("6")) {
+                this.deleteClients();
+            } else if (option.equals("7")) {
                 this.updateMovies();
-            } else if (option.equals("x")) {
+            } else if (option.equals("8")) {
+                this.deleteMovies();
+            } /*else if (option.equals("9")) {
+                this.addConsultation();
+            } else if (option.equals("10")) {
+                this.handleShowAllConsultations();
+            } else if (option.equals("11")) {
+                this.updateConsultation();
+            } else if (option.equals("12")) {
+                this.deleteConsultation();
+            }*/ else if (option.equals("x")) {
                 break;
             } else {
                 System.out.println("Comanda invalida!");
@@ -51,6 +76,36 @@ public class Console {
         }
     }
 
+    private void deleteMovies() {
+        try {
+            System.out.println("Dati id-ul: ");
+            long id = this.scanner.nextLong();
+            moviesService.deleteMovies(id);
+        }
+        catch (Exception exception) {
+            System.out.println("Au aparut erorile:");
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private void updateMovies() {
+        try {
+            System.out.println("Dati ID-ul: ");
+            long id = this.scanner.nextLong();
+            System.out.println("Dati numele: ");
+            String name = this.scanner.next();
+            System.out.println("Dati anul: ");
+            int year = this.scanner.nextInt();
+            System.out.println("Dati durata: ");
+            int duration = this.scanner.nextInt();
+            Movies movies = new Movies(id, name, year, duration);
+            this.moviesService.updateMovies(movies);
+            System.out.println("Update efectuat cu succes!");
+        } catch (Exception exception) {
+            System.out.println("Au aparut erorile:");
+            System.out.println(exception.getMessage());
+        }
+    }
 
     private void deleteClients() {
         try {
@@ -64,64 +119,125 @@ public class Console {
         }
     }
 
-
-    private void addClients() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("id = ");
-        Long id = scanner.nextLong();
-        System.out.println("cnp = ");
-        String cnp = scanner.next();
-        System.out.println("firstName = ");
-        String firstName = scanner.next();
-        System.out.println("lastName = ");
-        String lastName = scanner.next();
-        System.out.println("age = ");
-        int age = scanner.nextInt();
-        Clients clients = new Clients(id, cnp, firstName, lastName, age);
-        clientsService.addClients(clients);
-    }
-
-    private void handleShowAllClients() {
-        for (Clients clients : this.clientsService.getAllCLients()) {
-            System.out.println(clients.toString());
+    private void updateClients() {
+        try {
+            System.out.println("Dati ID-ul: ");
+            long id = this.scanner.nextLong();
+            System.out.println("Dati numele: ");
+            String lastName = this.scanner.next();
+            System.out.println("Dati prenumele: ");
+            String firstName = this.scanner.next();
+            System.out.println("Dati varsta: ");
+            int age = this.scanner.nextInt();
+            Clients clients = new Clients(id, lastName, firstName, age);
+            this.clientsService.updateClients(clients);
+            System.out.println(" Update efectuat cu succes!");
+        } catch (Exception exception) {
+            System.out.println("Au aparut erorile:");
+            System.out.println(exception.getMessage());
         }
     }
 
-    private void addMovies() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("id = ");
-        Long id = scanner.nextLong();
-        System.out.println("name = ");
-        String name = scanner.next();
-        System.out.println("year = ");
-        int year = scanner.nextInt();
-        System.out.println("duration = ");
-        int duration = scanner.nextInt();
-        Movies movies = new Movies(id, name, year, duration);
-        moviesService.addMovies(movies);
-    }
 
+    private void addClients() {
+        try {
+            System.out.println("Dati ID-ul: ");
+            long id = this.scanner.nextLong();
+            System.out.println("Dati numele: ");
+            String lastName = this.scanner.next();
+            System.out.println("Dati prenumele: ");
+            String firstName = this.scanner.next();
+            System.out.println("Dati varsta: ");
+            int age = this.scanner.nextInt();
+            Clients clients = new Clients(id, lastName, firstName, age);
+            this.clientsService.addClients(clients);
+            System.out.println("Adaugare efectuata cu succes!");
+        } catch (Exception exception) {
+            System.out.println("Au aparut erorile:");
+            System.out.println(exception.getMessage());
+        }
+    }
+    private void handleShowAllClients() {
+        for (Clients clients : this.clientsService.getAllClients()) {
+            System.out.println(clients.toString());
+        }
+    }
+    private void addMovies() {
+        try {
+            System.out.println("Dati ID-ul: ");
+            long id = this.scanner.nextLong();
+            System.out.println("Dati numele: ");
+            String name = this.scanner.next();
+            System.out.println("Dati anul: ");
+            int year = this.scanner.nextInt();
+            System.out.println("Dati durata: ");
+            int duration = this.scanner.nextInt();
+            Movies movies = new Movies(id, name, year, duration);
+            this.moviesService.addMovies(movies);
+            System.out.println("Adaugare efectuata cu succes!");
+        } catch (Exception exception) {
+            System.out.println("Au aparut erorile:");
+            System.out.println(exception.getMessage());
+        }
+    }
     private void handleShowAllMovies() {
         for (Movies movies : this.moviesService.getAllMovies()) {
             System.out.println(movies.toString());
         }
     }
-    private void updateMovies() {
+    /*
+    private void addConsultation() {
         try {
             System.out.println("Dati ID-ul: ");
             long id = this.scanner.nextLong();
-            System.out.println("Dati name: ");
-            String name = this.scanner.next();
-            System.out.println("Dati year: ");
-            int year = this.scanner.nextInt();
-            System.out.println("Dati duration: ");
-            int duration = this.scanner.nextInt();
-            Movies movies = new Movies(id, name, year, duration);
-            this.moviesService.updateMovies(movies);
+            System.out.println("Dati ID-ul doctorului: ");
+            long idDoctor = this.scanner.nextLong();
+            System.out.println("Dati ID-ul pacientului: ");
+            long idPacient = this.scanner.nextLong();
+            System.out.println("Dati pretul: ");
+            long price = this.scanner.nextLong();
+            Consultation consultation = new Consultation(id, idDoctor, idPacient, price);
+            this.consultationService.addConsultation(consultation);
+            System.out.println("Adaugare efectuata cu succes!");
+        } catch (Exception exception) {
+            System.out.println("Au aparut erorile:");
+            System.out.println(exception.getMessage());
+        }
+    }
+    private void handleShowAllConsultations() {
+        for (Consultation consultation : this.consultationService.getAllConsultations()) {
+            System.out.println(consultation.toString());
+        }
+    }
+
+    private void updateConsultation() {
+        try {
+            System.out.println("Dati ID-ul: ");
+            long id = this.scanner.nextLong();
+            System.out.println("Dati ID-ul doctorului: ");
+            long idDoctor = this.scanner.nextLong();
+            System.out.println("Dati ID-ul pacientului: ");
+            long idPacient = this.scanner.nextLong();
+            System.out.println("Dati pretul: ");
+            long price = this.scanner.nextLong();
+            Consultation consultation = new Consultation(id, idDoctor, idPacient, price);
+            this.consultationService.updateConsultation(consultation);
             System.out.println("Update efectuat cu succes!");
         } catch (Exception exception) {
             System.out.println("Au aparut erorile:");
             System.out.println(exception.getMessage());
         }
     }
+
+    private void deleteConsultation() {
+        try {
+            System.out.println("Dati id-ul: ");
+            long id = this.scanner.nextLong();
+            consultationService.deleteConsultation(id);
+        }
+        catch (Exception exception) {
+            System.out.println("Au aparut erorile:");
+            System.out.println(exception.getMessage());
+        }
+    }*/
 }

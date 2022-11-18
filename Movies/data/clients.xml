@@ -1,21 +1,114 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<clients>
-    <clients clientsID="1">
-        <CNP>2970914243654</CNP>
-        <firstName>Ionescu</firstName>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><clients>
+            
+    
+    <clients>
+                        
+        
+        <clientsId>1</clientsId>
+                        
+        
         <lastName>Andrei</lastName>
-        <age>25</age>
+                        
+        
+        <firstName>Ionescu</firstName>
+                        
+        
+        <age>46</age>
+                    
+    
     </clients>
-    <clients clientsID="2">
-        <CNP>1970113243654</CNP>
-        <firstName>Tofei</firstName>
-        <lastName>Iulie</lastName>
-        <age>50</age>
+            
+    
+    <clients>
+                        
+        
+        <clientsId>3</clientsId>
+                        
+        
+        <lastName>Ion</lastName>
+                        
+        
+        <firstName>Avram</firstName>
+                        
+        
+        <age>36</age>
+                    
+    
     </clients>
-    <clients clientsID="3">
-        <CNP>18904122232434</CNP>
-        <firstName>Popescu</firstName>
+            
+    
+    <clients>
+                        
+        
+        <clientsId>4</clientsId>
+                        
+        
+        <lastName>Marin</lastName>
+                        
+        
+        <firstName>Pop</firstName>
+                        
+        
+        <age>41</age>
+                    
+    
+    </clients>
+            
+    
+    <clients>
+                        
+        
+        <clientsId>5</clientsId>
+                        
+        
         <lastName>Maria</lastName>
-        <age>26</age>
+                        
+        
+        <firstName>Simion</firstName>
+                        
+        
+        <age>48</age>
+                    
+    
     </clients>
+            
+    
+    <clients>
+                        
+        
+        <clientsId>6</clientsId>
+                        
+        
+        <lastName>dfdads</lastName>
+                        
+        
+        <firstName>fsda</firstName>
+                        
+        
+        <age>52</age>
+                    
+    
+    </clients>
+            
+    
+    <clients>
+                        
+        
+        <clientsId>7</clientsId>
+                        
+        
+        <lastName>hash</lastName>
+                        
+        
+        <firstName>iulia</firstName>
+                        
+        
+        <age>26</age>
+                    
+    
+    </clients>
+        
+    
+
+    
 </clients>

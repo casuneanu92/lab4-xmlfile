@@ -1,91 +1,76 @@
 package org.example.domain;
+
+import java.util.Objects;
+
 /**
  * @author Simona.
  */
 
-public class Clients extends BaseEntity<Long>{
-    private String cnp;
-    private String firstName;
+public class Clients extends Entity<Long>{
     private String lastName;
+    private String firstName;
     private int age;
 
-    public Clients(String cnp, String firstName, String lastName, int age) {
-
-        this.cnp = cnp;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-    }
-
-
-    public Clients() {
-
-    }
-    public Clients (Long id, String cnp, String firstName, String lastName, int age) {
-        super(id);
-        this.cnp = cnp;
+    public Clients(String lastName, String firstName, int age) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.age = age;
     }
-    public String getCnp() {
-        return  cnp;
+
+    public Clients(Long idEntity, String lastName, String firstName, int age) {
+        super(idEntity);
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.age = age;
     }
-    public void setCNP (String cnp) {
-        this.cnp = cnp;
-    }
-    public String getFirstName() {
-        return firstName;
-    }
+
+
     public String getLastName() {
         return lastName;
     }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public int getAge() {
         return age;
     }
+
     public void setAge(int age) {
         this.age = age;
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Clients clients= (Clients) o;
-
-        if (age != clients.age) return false;
-        if (!cnp.equals(clients.cnp)) return false;
-        return firstName.equals(clients.firstName);
-
+        Clients clients = (Clients) o;
+        return age == clients.age && Objects.equals(lastName, clients.lastName) && Objects.equals(firstName, clients.firstName);
     }
 
     @Override
     public int hashCode() {
-        int result = cnp.hashCode();
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + age;
-        return result;
+        return Objects.hash(lastName, firstName, age);
     }
+
     @Override
     public String toString() {
         return "Clients{" +
-                "id='" + getId() + '\'' +
-                "cnp='" + cnp + '\'' +
-                ", firstName='" + firstName + '\'' +
+                "id='" + getIdEntity() + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", age=" + age +
-                '}' + super.toString();
+                '}';
     }
 }
-
-
 
 

@@ -1,8 +1,8 @@
 package org.example.repository;
 
+import org.example.domain.Movies;
 import org.example.domain.validators.Validator;
 import org.example.domain.validators.ValidatorException;
-import org.example.domain.Movies;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -20,7 +20,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-
 import java.util.Optional;
 
 public class MoviesXMLRepository extends InMemoryRepository<Long, Movies> {
@@ -28,11 +27,8 @@ public class MoviesXMLRepository extends InMemoryRepository<Long, Movies> {
     private String filename;
     private static final String Movies_Tag = "movies";
     private static final String Movies_Id_Tag = "moviesId";
-
     private static final String Movies_Name_Tag = "name";
-
     private static final String Movies_Year_Tag = "year";
-
     private static final String Movies_Duration_Tag = "duration";
     public MoviesXMLRepository(Validator<Movies> validator, String filename) {
         super(validator);
@@ -49,20 +45,19 @@ public class MoviesXMLRepository extends InMemoryRepository<Long, Movies> {
             Document document = documentBuilder.parse(filename);
 
             Element rootElement = document.getDocumentElement();
-            NodeList moviesNodes = rootElement.getChildNodes();
+            //NodeList patientNodes = rootElement.getChildNodes();
+            NodeList nodes = rootElement.getChildNodes();
+            for (int i = 0; i < nodes.getLength(); i++) {
+                if(nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) nodes.item(i);
+                    Element moviesElement = (Element) element;
+                    Movies movies = buildMoviesFromMoviesElement(moviesElement);
 
-            for (int i = 0; i < moviesNodes.getLength(); i++) {
-                Node moviesNode = moviesNodes.item(i);
-                if (!(moviesNodes instanceof Element)) {
-                    continue;
-                }
-                Element moviesElement = (Element) moviesNode;
-                Movies movies = buildMoviesFromMoviesElement(moviesElement);
-
-                try {
-                    super.save(movies);
-                } catch (ValidatorException e) {//is thrown only when I could not add because a car with the same id already is in repoi
-                    e.printStackTrace();
+                    try {
+                        super.save(movies);
+                    } catch (ValidatorException e) {//is thrown only when I could not add because a car with the same id already is in repoi
+                        e.printStackTrace();
+                    }
                 }
             }
         }catch (ValidatorException | ParserConfigurationException | SAXException | IOException  ex){
@@ -71,21 +66,23 @@ public class MoviesXMLRepository extends InMemoryRepository<Long, Movies> {
     }
 
     private static Movies buildMoviesFromMoviesElement(Element moviesElement) {
-        Node idNode = moviesElement.getElementsByTagName(Movies_Tag).item(0);
-        String id = idNode.getTextContent();
+        Node idNodesMovies = moviesElement.getElementsByTagName(Movies_Id_Tag).item(0);
+        String id = idNodesMovies.getTextContent();
 
-        Node nameNode = moviesElement.getElementsByTagName(Movies_Name_Tag).item(0);
-        String name = nameNode.getTextContent();
+        Node nameNodeMovies = moviesElement.getElementsByTagName(Movies_Name_Tag).item(0);
+        String name = nameNodeMovies.getTextContent();
 
-        Node yearNode = moviesElement.getElementsByTagName(Movies_Year_Tag).item(0);
-        String year = yearNode.getTextContent();
+        Node yearNodeMovies = moviesElement.getElementsByTagName(Movies_Year_Tag).item(0);
+        String year = yearNodeMovies.getTextContent();
 
-        Node durationNode = moviesElement.getElementsByTagName(Movies_Duration_Tag).item(0);
-        String duration = durationNode.getTextContent();
+        Node durationNodeMovies = moviesElement.getElementsByTagName(Movies_Duration_Tag).item(0);
+        String duration = durationNodeMovies.getTextContent();
 
-        Movies movies = new Movies(Long.parseLong(id), name, Integer.parseInt(year), Integer.parseInt(duration));
+        Movies movies = new Movies(Long.parseLong(id), name, Integer.parseInt(year),  Integer.parseInt(duration));
         return movies;
-        }
+
+
+    }
 
     @Override
     public Optional<Movies> save(Movies movies) throws ValidatorException {
@@ -134,7 +131,7 @@ public class MoviesXMLRepository extends InMemoryRepository<Long, Movies> {
 
         // append id Element(Tag)
         Element idElement = document.createElement(Movies_Id_Tag);
-        idElement.setTextContent(moviesToSave.getId().toString());
+        idElement.setTextContent(moviesToSave.getIdEntity().toString());
         moviesElement.appendChild(idElement);
 
         //append lastName Element (Tag)
@@ -142,12 +139,11 @@ public class MoviesXMLRepository extends InMemoryRepository<Long, Movies> {
         nameElement.setTextContent(moviesToSave.getName());
         moviesElement.appendChild(nameElement);
 
-        // append firstName Element(Tag)
+        // append age Element(Tag)
         Element yearElement = document.createElement(Movies_Year_Tag);
         yearElement.setTextContent(String.valueOf(moviesToSave.getYear()));
         moviesElement.appendChild(yearElement);
 
-        // append age Element(Tag)
         Element durationElement = document.createElement(Movies_Duration_Tag);
         durationElement.setTextContent(String.valueOf(moviesToSave.getDuration()));
         moviesElement.appendChild(durationElement);
@@ -156,10 +152,10 @@ public class MoviesXMLRepository extends InMemoryRepository<Long, Movies> {
     }
 
     @Override
-    public Optional<Movies> update (Movies movies) throws ValidatorException {
-        Optional<Movies> optionalDoctor = super.update(movies);
+    public Optional<Movies> update (Movies movies) throws ValidatorException, IllegalAccessException {
+        Optional<Movies> optionalMovies = super.update(movies);
         try {
-            deleteNode(movies.getId().toString());
+            deleteNode(movies.getIdEntity().toString());
         } catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
         }
@@ -168,7 +164,7 @@ public class MoviesXMLRepository extends InMemoryRepository<Long, Movies> {
         } catch (IOException | ParserConfigurationException | TransformerException | SAXException e) {
             e.printStackTrace();
         }
-        return optionalDoctor;
+        return optionalMovies;
     }
 
 
@@ -204,7 +200,7 @@ public class MoviesXMLRepository extends InMemoryRepository<Long, Movies> {
 
 
     @Override
-    public Optional<Movies> delete(Long id) {
+    public Optional<Movies> delete(Long id) throws IllegalAccessException {
         Optional<Movies> movies = super.delete(id);
         try {
             deleteNode(id.toString());
@@ -214,4 +210,3 @@ public class MoviesXMLRepository extends InMemoryRepository<Long, Movies> {
         return movies;
     }
 }
-

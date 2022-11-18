@@ -1,6 +1,7 @@
 package org.example.repository;
 
-import org.example.domain.BaseEntity;
+
+import org.example.domain.Entity;
 import org.example.domain.validators.ValidatorException;
 
 import java.util.Optional;
@@ -11,10 +12,10 @@ import java.util.Optional;
  * @author radu.
  *
  */
-public interface Repository<ID, T extends BaseEntity<ID>> {
+public interface Repository<ID, T extends Entity<ID>> {
     /**
      * Find the entity with the given {@code id}.
-     * 
+     *
      * @param id
      *            must be not null.
      * @return an {@code Optional} encapsulating the entity with the given id.
@@ -51,11 +52,11 @@ public interface Repository<ID, T extends BaseEntity<ID>> {
      * @throws IllegalArgumentException
      *             if the given id is null.
      */
-    Optional<T> delete(ID id);
+    Optional<T> delete(ID id) throws IllegalAccessException;
 
     /**
      * Updates the given entity.
-     * 
+     *
      * @param entity
      *            must not be null.
      * @return an {@code Optional} - null if the entity was updated otherwise (e.g. id does not exist) returns the
@@ -65,5 +66,6 @@ public interface Repository<ID, T extends BaseEntity<ID>> {
      * @throws ValidatorException
      *             if the entity is not valid.
      */
-    Optional<T> update(T entity) throws ValidatorException;
+    Optional<T> update(T entity) throws ValidatorException, IllegalAccessException;
 }
+

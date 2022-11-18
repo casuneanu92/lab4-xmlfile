@@ -1,6 +1,6 @@
 package org.example.repository;
 
-import org.example.domain.Movies;
+import org.example.domain.Transaction;
 import org.example.domain.validators.Validator;
 import org.example.domain.validators.ValidatorException;
 
@@ -16,15 +16,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class MoviesFileRepository extends InMemoryRepository<Long, Movies> {
+public class TransactionFileRepository extends InMemoryRepository<Long, Transaction> {
     private String fileName;
 
-    public MoviesFileRepository(Validator<Movies> validator, String fileName) {
+    public TransactionFileRepository(Validator<Transaction> validator, String fileName) {
         super(validator);
         this.fileName = fileName;
 
         loadData();
     }
+
+
 
     private void loadData() {
         Path path = Paths.get(fileName);
@@ -34,15 +36,16 @@ public class MoviesFileRepository extends InMemoryRepository<Long, Movies> {
                 List<String> items = Arrays.asList(line.split(","));
 
                 Long id = Long.valueOf(items.get(0).trim());
-                String name = items.get(1).trim();
-                int year = Integer.parseInt(items.get(2).trim());
-                int duration = Integer.parseInt(items.get(3).trim());
+                Long idClients = Long.valueOf(items.get(1).trim());
+                Long idMovies = Long.valueOf(items.get(2).trim());
+                Long price = Long.valueOf(items.get(3).trim());
 
-                Movies movies = new Movies(name, year, duration);
-                movies.setIdEntity(id);
+
+                Transaction transaction = new Transaction(idClients, idMovies, price);
+                transaction.setIdEntity(id);
 
                 try {
-                    super.save(movies);
+                    super.save(transaction);
                 } catch (ValidatorException e) {
                     e.printStackTrace();
                 }
@@ -53,8 +56,8 @@ public class MoviesFileRepository extends InMemoryRepository<Long, Movies> {
     }
 
     @Override
-    public Optional<Movies> save(Movies entity) throws ValidatorException {
-        Optional<Movies> optional = super.save(entity);
+    public Optional<Transaction> save(Transaction entity) throws ValidatorException {
+        Optional<Transaction> optional = super.save(entity);
         if (optional.isPresent()) {
             return optional;
         }
@@ -62,62 +65,51 @@ public class MoviesFileRepository extends InMemoryRepository<Long, Movies> {
         return Optional.empty();
     }
 
-    private void saveToFile(Movies entity) {
+    private void saveToFile(Transaction entity) {
         Path path = Paths.get(fileName);
 
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
             bufferedWriter.write(
-                    entity.getIdEntity() + "," + entity.getName() + "," + entity.getYear() + "," + entity.getDuration());
+                    entity.getIdEntity() + "," + entity.getIdClients() + "," + entity.getIdMovies() + "," + entity.getPrice());
             bufferedWriter.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public Optional<Movies> delete(Long id) throws ValidatorException, IllegalAccessException {
-        Optional<Movies> optional = super.delete(id);
-        deleteFromFile(id);
-        if (optional.isPresent()) {
-            return optional;
-        }
-        return Optional.empty();
     }
 
     private void deleteFromFile(Long id) {
         Path path = Paths.get(fileName);
-        String lineContent = id + ", ";
+        String lineContent = id + ",";
         try {
             File file = new File(String.valueOf(path));
-            List<String> out = Files.lines(file.toPath()).
+            List<String> out =Files.lines(file.toPath()).
                     filter(line -> !line.startsWith(lineContent)).
                     collect(Collectors.toList());
-            Files.write(file.toPath(), out, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
-        } catch (IOException e) {
+            Files.write(file.toPath(),out,StandardOpenOption.WRITE,StandardOpenOption.TRUNCATE_EXISTING);
+        }catch (IOException e){
             e.printStackTrace();
         }
     }
 
     @Override
-    public Optional<Movies> update(Movies entity) throws ValidatorException, IllegalAccessException {
-        Optional<Movies> optional = super.update(entity);
-        delete(entity.getIdEntity());
-        save(entity);
+    public Optional<Transaction> update(Transaction entity) throws ValidatorException, IllegalAccessException {
+        Optional<Transaction> optional = super.update(entity);
         if (optional.isPresent()) {
             return optional;
         }
+        updateFile(entity);
         return Optional.empty();
     }
 
-    /*private void updateFile(Patient entity) {
+    private void updateFile(Transaction entity) {
         Path path = Paths.get(fileName);
 
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.TRUNCATE_EXISTING)) {
             bufferedWriter.write(
-                    entity.getIdEntity() + "," + entity.getLastName() + "," + entity.getFirstName() + "," + entity.getAge()+ "," + entity.getReason());
+                    entity.getIdEntity() + ", " + entity.getIdClients() + ", " + entity.getIdMovies() + ", " + entity.getPrice());
             bufferedWriter.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }

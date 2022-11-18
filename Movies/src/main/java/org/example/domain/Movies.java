@@ -1,8 +1,11 @@
 package org.example.domain;
+
+import java.util.Objects;
+
 /**
         * @author Sergiu.
         */
-public class Movies extends BaseEntity<Long> {
+public class Movies extends Entity<Long> {
 
     private String name;
 
@@ -16,8 +19,8 @@ public class Movies extends BaseEntity<Long> {
         this.duration = duration;
     }
 
-    public Movies(Long id, String name, int year, int duration) {
-        super(id);
+    public Movies(Long idEntity, String name, int year, int duration) {
+        super(idEntity);
         this.name = name;
         this.year = year;
         this.duration = duration;
@@ -47,31 +50,28 @@ public class Movies extends BaseEntity<Long> {
         this.duration = duration;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Movies movies= (Movies) o;
-        if (year != movies.year) return false;
-        if (duration != movies.duration) return false;
-        return name.equals(movies.name);
-
+        Movies movies = (Movies) o;
+        return year == movies.year && Objects.equals(name, movies.name) && Objects.equals(duration, movies.duration);
     }
 
     @Override
     public int hashCode() {
-        int result = duration;
-        result = 31 * result + name.hashCode();
-        result = 31 * result + year;
-        return result;
+        return Objects.hash(name, year, duration);
     }
+
     @Override
     public String toString() {
         return "Movies{" +
-                "id='" + getId() + '\'' +
-                "name='" + name + '\'' +
+                "id='" + getIdEntity() + '\'' +
+                ", name='" + name + '\'' +
                 ", year=" + year +
-                ", duration=" + duration +
-                '}' + super.toString();
+                ", duration='" + duration + '\'' +
+                '}';
     }
 }

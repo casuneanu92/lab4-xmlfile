@@ -1,33 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <movies>
-    <movies moviesID="1">
-        <name>Labici Avram</name>
-        <year>1946</year>
-        <duration>46</duration>
-    </movies>
-    <movies moviesID="2">
-       <name>Grigorescu Ionela</name>
-        <year>2015</year>
-        <duration>120</duration>
-    </movies>
-    <movies moviesID="3">
-        <name>Avram</name>
-        <year>1820</year>
-        <duration>69</duration>
-    </movies>
-    <movies moviesID="4">
-        <name>Pop Camelia</name>
-        <year>161</year>
+                
+    
+    
+    <movies>
+                
+        <moviesId>1</moviesId>
+                
+        <name>Rapirea</name>
+                
+        <year>2022</year>
+                
         <duration>90</duration>
+            
     </movies>
-    <movies moviesID="5">
-        <name>Tofei Simion</name>
-        <year>1948</year>
-        <duration>30</duration>
+        
+    <movies>
+                
+        <moviesId>2</moviesId>
+                
+        <name>Cinderella</name>
+                
+        <year>2010</year>
+                
+        <duration>90</duration>
+            
     </movies>
-    <movies moviesID="6">
-        <name>Timofte Luca</name>
-        <year>2020</year>
-        <duration>55</duration>
+        
+    <movies>
+                
+        <moviesId>3</moviesId>
+                
+        <name>Iona</name>
+                
+        <year>1993</year>
+                
+        <duration>120</duration>
+            
+    </movies>
+    
+    <movies>
+        <moviesId>4</moviesId>
+        <name>Titanic</name>
+        <year>1956</year>
+        <duration>120</duration>
     </movies>
 </movies>
