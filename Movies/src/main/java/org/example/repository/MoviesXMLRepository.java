@@ -55,7 +55,7 @@ public class MoviesXMLRepository extends InMemoryRepository<Long, Movies> {
 
                     try {
                         super.save(movies);
-                    } catch (ValidatorException e) {//is thrown only when I could not add because a car with the same id already is in repoi
+                    } catch (ValidatorException e) {//is thrown only when I could not add because a movies with the same id already is in repoi
                         e.printStackTrace();
                     }
                 }

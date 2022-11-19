@@ -15,7 +15,7 @@ public interface IMoviesRepository {
      * Find the entity with the given {@code id}.
      *
      * @param id must be not null.
-     * @return a {@code Patient}  with the given id.
+     * @return a {@code Movies}  with the given id.
      * @throws IllegalArgumentException if the given id is null.
      */
     Movies findOne(Long id);
@@ -29,7 +29,7 @@ public interface IMoviesRepository {
      * Saves the given entity.
      *
      * @param entity must not be null.
-     * @return a {@code Patient} - null if the entity was saved otherwise (e.g. id already exists) returns the entity.
+     * @return a {@code Movies} - null if the entity was saved otherwise (e.g. id already exists) returns the entity.
      * @throws IllegalArgumentException if the given entity is null.
      */
     Movies save(Movies entity);
@@ -40,7 +40,7 @@ public interface IMoviesRepository {
      * Removes the entity with the given id.
      *
      * @param id must not be null.
-     * @return a {@code Patient} - null if there is no entity with the given id, otherwise the removed entity.
+     * @return a {@code Movies} - null if there is no entity with the given id, otherwise the removed entity.
      * @throws IllegalArgumentException if the given id is null.
      */
     Movies delete(Long id);
@@ -49,7 +49,7 @@ public interface IMoviesRepository {
      * Updates the given entity.
      *
      * @param entity must not be null.
-     * @return a {@code Patient} - null if the entity was updated otherwise (e.g. id does not exist) returns the
+     * @return a {@code Movies} - null if the entity was updated otherwise (e.g. id does not exist) returns the
      * entity.
      * @throws IllegalArgumentException if the given entity is null.
      */

@@ -18,7 +18,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
-
 public class Main {
     private static String clientsPropertyXML = null;
     private static String moviesPropertyXML = null;
@@ -27,7 +26,7 @@ public class Main {
     private static String clientsPropertyDB = null;
     private static String moviesPropertyDB = null;
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/hospital";
+    private static final String URL = "jdbc:postgresql://localhost:5432/movies";
     private static String USER = null;
     private static String PASSWORD = null;
 

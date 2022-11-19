@@ -26,7 +26,7 @@ public class TransactionRepository implements ITransactionRepository{
      * Find the entity with the given {@code id}.
      *
      * @param id must be not null.
-     * @return a {@code Doctor}  with the given id.
+     * @return a {@code Transaction}  with the given id.
      * @throws IllegalArgumentException if the given id is null.
      */
     @Override
@@ -35,7 +35,6 @@ public class TransactionRepository implements ITransactionRepository{
             throw new IllegalArgumentException("id must not be null");
         }
         return entities.get(id);
-        //throw new RuntimeException("not yet implemented");
     }
 
     /**
@@ -51,7 +50,7 @@ public class TransactionRepository implements ITransactionRepository{
      * Saves the given entity.
      *
      * @param entity must not be null.
-     * @return a {@code Doctor} - null if the entity was saved otherwise (e.g. id already exists) returns the entity.
+     * @return a {@code Transaction} - null if the entity was saved otherwise (e.g. id already exists) returns the entity.
      * @throws IllegalArgumentException if the given entity is null.
      */
     @Override
@@ -67,7 +66,7 @@ public class TransactionRepository implements ITransactionRepository{
      * Removes the entity with the given id.
      *
      * @param id must not be null.
-     * @return a {@code Doctor} - null if there is no entity with the given id, otherwise the removed entity.
+     * @return a {@code Transaction} - null if there is no entity with the given id, otherwise the removed entity.
      * @throws IllegalArgumentException if the given id is null.
      */
     @Override
@@ -76,14 +75,13 @@ public class TransactionRepository implements ITransactionRepository{
             throw new IllegalArgumentException("id must not be null");
         }
         return entities.remove(id);
-        //throw new RuntimeException("not yet implemented");
     }
 
     /**
      * Updates the given entity.
      *
      * @param entity must not be null.
-     * @return a {@code Doctor} - null if the entity was updated otherwise (e.g. id does not exist) returns the
+     * @return a {@code Transaction} - null if the entity was updated otherwise (e.g. id does not exist) returns the
      * entity.
      * @throws IllegalArgumentException if the given entity is null.
      */
@@ -94,7 +92,6 @@ public class TransactionRepository implements ITransactionRepository{
         }
         validator.validate(entity);
         return entities.computeIfPresent(entity.getIdEntity(), (k, v) -> entity);
-        //throw new RuntimeException("not yet implemented");
     }
 
 }

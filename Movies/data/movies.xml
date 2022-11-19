@@ -1,48 +1,79 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <movies>
-                
+                    
+    
     
     
     <movies>
-                
+                        
+        
         <moviesId>1</moviesId>
-                
+                        
+        
         <name>Rapirea</name>
-                
+                        
+        
         <year>2022</year>
-                
-        <duration>90</duration>
-            
-    </movies>
+                        
         
+        <duration>90</duration>
+                    
+    
+    </movies>
+            
+    
     <movies>
-                
+                        
+        
         <moviesId>2</moviesId>
-                
+                        
+        
         <name>Cinderella</name>
-                
+                        
+        
         <year>2010</year>
-                
+                        
+        
         <duration>90</duration>
+                    
+    
+    </movies>
             
+    
+    <movies>
+                        
+        
+        <moviesId>3</moviesId>
+                        
+        
+        <name>Iona</name>
+                        
+        
+        <year>1993</year>
+                        
+        
+        <duration>120</duration>
+                    
+    
     </movies>
         
+    
     <movies>
                 
-        <moviesId>3</moviesId>
+        <moviesId>4</moviesId>
                 
-        <name>Iona</name>
+        <name>Titanic</name>
                 
-        <year>1993</year>
+        <year>1956</year>
                 
         <duration>120</duration>
             
     </movies>
     
     <movies>
-        <moviesId>4</moviesId>
-        <name>Titanic</name>
-        <year>1956</year>
+        <moviesId>5</moviesId>
+        <name>Transformers</name>
+        <year>2011</year>
         <duration>120</duration>
     </movies>
 </movies>

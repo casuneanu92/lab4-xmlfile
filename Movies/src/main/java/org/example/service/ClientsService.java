@@ -19,8 +19,8 @@ public class ClientsService {
     }
 
     public Set<Clients> getAllClients() {
-        Iterable<Clients> doctors = repository.findAll();
-        return StreamSupport.stream(doctors.spliterator(), false).collect(Collectors.toSet());
+        Iterable<Clients> clients = repository.findAll();
+        return StreamSupport.stream(clients.spliterator(), false).collect(Collectors.toSet());
     }
 
     public  void updateClients(Clients clients) throws ValidatorException, IllegalAccessException {

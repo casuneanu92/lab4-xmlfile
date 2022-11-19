@@ -57,7 +57,7 @@ public class MoviesDBRepository extends InMemoryRepository<Long, Movies>{
     }
         public void addMovies(Movies movies) {
 
-        var sql = "insert into movies (id ,name, year, duration) values (?, ?, ?, ?, ?)";
+        var sql = "insert into movies (id, name, year, duration) values (?, ?, ?, ?)";
 
         try (var connection = DriverManager.getConnection(url, user, password);
              var preparedStatement = connection.prepareStatement(sql);

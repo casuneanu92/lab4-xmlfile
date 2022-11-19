@@ -108,16 +108,4 @@ public class MoviesFileRepository extends InMemoryRepository<Long, Movies> {
         }
         return Optional.empty();
     }
-
-    /*private void updateFile(Patient entity) {
-        Path path = Paths.get(fileName);
-
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.TRUNCATE_EXISTING)) {
-            bufferedWriter.write(
-                    entity.getIdEntity() + "," + entity.getLastName() + "," + entity.getFirstName() + "," + entity.getAge()+ "," + entity.getReason());
-            bufferedWriter.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 }

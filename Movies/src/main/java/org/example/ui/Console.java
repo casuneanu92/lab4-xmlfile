@@ -31,10 +31,6 @@ public class Console {
         System.out.println("6. Delete clienti");
         System.out.println("7. Update filme");
         System.out.println("8. Delete filme");
-       /* System.out.println("9. Adaugare consultatie");
-        System.out.println("10. Afisare consultatii");
-        System.out.println("11. Update consultatie");
-        System.out.println("12. Delete consultatie");*/
         System.out.println("x. Iesire");
     }
     public void startConsole() {
@@ -60,15 +56,7 @@ public class Console {
                 this.updateMovies();
             } else if (option.equals("8")) {
                 this.deleteMovies();
-            } /*else if (option.equals("9")) {
-                this.addConsultation();
-            } else if (option.equals("10")) {
-                this.handleShowAllConsultations();
-            } else if (option.equals("11")) {
-                this.updateConsultation();
-            } else if (option.equals("12")) {
-                this.deleteConsultation();
-            }*/ else if (option.equals("x")) {
+            } else if (option.equals("x")) {
                 break;
             } else {
                 System.out.println("Comanda invalida!");
@@ -185,59 +173,4 @@ public class Console {
             System.out.println(movies.toString());
         }
     }
-    /*
-    private void addConsultation() {
-        try {
-            System.out.println("Dati ID-ul: ");
-            long id = this.scanner.nextLong();
-            System.out.println("Dati ID-ul doctorului: ");
-            long idDoctor = this.scanner.nextLong();
-            System.out.println("Dati ID-ul pacientului: ");
-            long idPacient = this.scanner.nextLong();
-            System.out.println("Dati pretul: ");
-            long price = this.scanner.nextLong();
-            Consultation consultation = new Consultation(id, idDoctor, idPacient, price);
-            this.consultationService.addConsultation(consultation);
-            System.out.println("Adaugare efectuata cu succes!");
-        } catch (Exception exception) {
-            System.out.println("Au aparut erorile:");
-            System.out.println(exception.getMessage());
-        }
-    }
-    private void handleShowAllConsultations() {
-        for (Consultation consultation : this.consultationService.getAllConsultations()) {
-            System.out.println(consultation.toString());
-        }
-    }
-
-    private void updateConsultation() {
-        try {
-            System.out.println("Dati ID-ul: ");
-            long id = this.scanner.nextLong();
-            System.out.println("Dati ID-ul doctorului: ");
-            long idDoctor = this.scanner.nextLong();
-            System.out.println("Dati ID-ul pacientului: ");
-            long idPacient = this.scanner.nextLong();
-            System.out.println("Dati pretul: ");
-            long price = this.scanner.nextLong();
-            Consultation consultation = new Consultation(id, idDoctor, idPacient, price);
-            this.consultationService.updateConsultation(consultation);
-            System.out.println("Update efectuat cu succes!");
-        } catch (Exception exception) {
-            System.out.println("Au aparut erorile:");
-            System.out.println(exception.getMessage());
-        }
-    }
-
-    private void deleteConsultation() {
-        try {
-            System.out.println("Dati id-ul: ");
-            long id = this.scanner.nextLong();
-            consultationService.deleteConsultation(id);
-        }
-        catch (Exception exception) {
-            System.out.println("Au aparut erorile:");
-            System.out.println(exception.getMessage());
-        }
-    }*/
 }

@@ -35,7 +35,7 @@ public class ClientsDBRepository extends InMemoryRepository<Long, Clients> {
                     var firstName = resultSet.getString("firstName");
                     var age = resultSet.getInt("age");
 
-                    Clients clients1 = new Clients(id,lastName,firstName,age);
+                    Clients clients1 = new Clients(id, lastName, firstName, age);
 
                     clients.add(clients1);
                 }
@@ -80,7 +80,7 @@ public class ClientsDBRepository extends InMemoryRepository<Long, Clients> {
     }
         public void updateClients(Clients clients) {
 
-            var sql = " update doctors set lastName = ?, firstName = ?, age =? where id = ?";
+            var sql = " update clients set lastName = ?, firstName = ?, age =? where id = ?";
             try (var connection = DriverManager.getConnection(url, user, password);
                  var preparedStatement = connection.prepareStatement(sql);) {
 
